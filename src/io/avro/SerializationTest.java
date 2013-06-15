@@ -6,9 +6,13 @@ import java.io.IOException;
 
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
+import org.apache.avro.generic.GenericDatumReader;
 import org.apache.avro.generic.GenericDatumWriter;
 import org.apache.avro.generic.GenericRecord;
+import org.apache.avro.io.DatumReader;
 import org.apache.avro.io.DatumWriter;
+import org.apache.avro.io.Decoder;
+import org.apache.avro.io.DecoderFactory;
 import org.apache.avro.io.Encoder;
 import org.apache.avro.io.EncoderFactory;
 
@@ -29,8 +33,12 @@ public class SerializationTest {
 		encoder.flush();
 		bOut.close();
 		
-		
-		
+		DatumReader<GenericRecord> dataIn = new GenericDatumReader<GenericRecord>(schema);
+		Decoder decoder = DecoderFactory.get().binaryDecoder(bOut.toByteArray(), null);
+		GenericRecord result = dataIn.read(null, decoder);
+		System.out.println(result.get("left"));
+		System.out.println(result.get("right"));
+		System.out.println(bOut.toByteArray());
 	}
 
 }
