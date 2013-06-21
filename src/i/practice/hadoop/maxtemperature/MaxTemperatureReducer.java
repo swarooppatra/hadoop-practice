@@ -10,11 +10,9 @@ import org.apache.hadoop.mapred.OutputCollector;
 import org.apache.hadoop.mapred.Reducer;
 import org.apache.hadoop.mapred.Reporter;
 
-@SuppressWarnings("deprecation")
 public class MaxTemperatureReducer extends MapReduceBase implements
     Reducer<Text, IntWritable, Text, IntWritable> {
 
-  @Override
   public void reduce(Text key, Iterator<IntWritable> value,
       OutputCollector<Text, IntWritable> output, Reporter repoter)
       throws IOException {

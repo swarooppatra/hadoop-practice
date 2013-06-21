@@ -10,13 +10,12 @@ import org.apache.hadoop.mapred.Mapper;
 import org.apache.hadoop.mapred.OutputCollector;
 import org.apache.hadoop.mapred.Reporter;
 
-@SuppressWarnings("deprecation")
 public class MaxTemperatureMapper extends MapReduceBase implements
     Mapper<LongWritable, Text, Text, IntWritable> {
 
   private static final int MISSING = 9999;
 
-  @Override
+  
   public void map(LongWritable key, Text value,
       OutputCollector<Text, IntWritable> output, Reporter reporter)
       throws IOException {

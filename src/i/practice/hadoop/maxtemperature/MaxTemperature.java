@@ -10,7 +10,6 @@ import org.apache.hadoop.mapred.FileOutputFormat;
 import org.apache.hadoop.mapred.JobClient;
 import org.apache.hadoop.mapred.JobConf;
 
-@SuppressWarnings("deprecation")
 public class MaxTemperature {
 
   public static void main(String args[]) throws IOException {

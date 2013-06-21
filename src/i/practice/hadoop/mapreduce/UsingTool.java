@@ -15,7 +15,6 @@ public class UsingTool extends Configured implements Tool {
     Configuration.addDefaultResource("mapred-site.xml");
   }
 
-  @Override
   public int run(String[] arg0) throws Exception {
     Configuration conf = getConf();
     for (Entry<String, String> entry : conf) {

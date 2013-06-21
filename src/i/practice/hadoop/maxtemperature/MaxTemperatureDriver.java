@@ -14,7 +14,6 @@ import org.apache.hadoop.util.ToolRunner;
 @SuppressWarnings("deprecation")
 public class MaxTemperatureDriver extends Configured implements Tool {
 
-  @Override
   public int run(String[] args) throws Exception {
     if (args.length != 2) {
       System.err.printf("USAGE : %s [generic option] <input> <output>\n",
