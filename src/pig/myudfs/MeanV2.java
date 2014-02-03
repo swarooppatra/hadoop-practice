@@ -1,13 +1,11 @@
 package pig.myudfs;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
 import org.apache.pig.EvalFunc;
 import org.apache.pig.PigWarning;
 import org.apache.pig.backend.executionengine.ExecException;
@@ -17,14 +15,13 @@ import org.apache.pig.data.Tuple;
 import org.apache.pig.impl.logicalLayer.FrontendException;
 import org.apache.pig.impl.logicalLayer.schema.Schema;
 import org.apache.pig.impl.logicalLayer.schema.Schema.FieldSchema;
-import org.apache.pig.impl.util.UDFContext;
 
-public class Mean extends EvalFunc<Double> {
+public class MeanV2 extends EvalFunc<Double> {
 
 	String detainedStudentsFile;
 	List<String> detainedStudents = null;
 
-	public Mean(String file) {
+	public MeanV2(String file) {
 		detainedStudentsFile = file;
 	}
 
@@ -32,14 +29,12 @@ public class Mean extends EvalFunc<Double> {
 	public Double exec(Tuple arg0) throws IOException {
 		if (detainedStudents == null) {
 			detainedStudents = new ArrayList<String>();
-			FileSystem fs = FileSystem.get(UDFContext.getUDFContext()
-					.getJobConf());
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					fs.open(new Path(detainedStudentsFile))));
+			BufferedReader br = new BufferedReader(new FileReader("./mean_v2"));
 			String line = "";
 			while ((line = br.readLine()) != null) {
 				detainedStudents.add(line.trim());
 			}
+			br.close();
 		}
 		return mean(arg0);
 	}
@@ -105,12 +100,11 @@ public class Mean extends EvalFunc<Double> {
 		return new Schema(new FieldSchema(null, DataType.DOUBLE));
 	}
 
-	public static void main(String args[]) {
-		int i = 13;
-		Object iO = new Integer(i);
-		System.out.println();
-		double d = (Integer) iO;
-		System.out.println(d);
+	@Override
+	public List<String> getCacheFiles() {
+		List<String> cacheFiles = new ArrayList<String>();
+		cacheFiles.add(detainedStudentsFile + "#mean_v2");
+		return cacheFiles;
 	}
 
 }

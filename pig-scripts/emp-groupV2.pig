@@ -2,7 +2,7 @@ SET job.name 'Employee Group';
 
 REGISTER hadooppractice.jar;
 
-DEFINE MEAN pig.myudfs.Mean('/data/input/detained.txt');
+DEFINE MEAN pig.myudfs.MeanV2('/data/input/detained.txt');
 
 A = LOAD '/data/input/emp3.tsv' AS (empid:int, empname:chararray, deptid:int, skill1:chararray, skill2:chararray, skill3:chararray, mark:int);
 B = FOREACH A GENERATE deptid, empname, mark;
